@@ -37,7 +37,9 @@ def get_list_lowest_points(height_map: List[List[int]]) -> List[Tuple[int, int, 
     return result
 
 
-def get_basin_size(height_map: List[List[int]], idy: int, idx: int, can_up=False, can_down=False) -> List[Tuple[int, int]]:
+def get_basin_size(height_map: List[List[int]], idy: int, idx: int, can_up=False, can_down=False) -> List[
+    Tuple[int, int]]:
+
     result = []
     keep_counting = True
     count_x = copy.deepcopy(idx)
