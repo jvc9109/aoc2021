@@ -133,7 +133,7 @@ def get_last_winner(draw_numbers: List[int], boards_playing: List[Board]) -> Opt
 
 
 if __name__ == '__main__':
-    with open("./data/day4.txt") as file:
+    with open("../data/day4.txt") as file:
         data = file.read().splitlines()
         draws = [int(i) for i in data[0].split(',')]
         boards = build_boards(data)

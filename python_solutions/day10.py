@@ -38,6 +38,7 @@ def solve_problems(data: List[str]) -> Tuple[int, int]:
     return total, scores[len(scores) // 2]
 
 
-with open("../data/day10.txt") as file:
-    data = file.read().splitlines()
-    print(solve_problems(data))
+if __name__ == '__main__':
+    with open("../data/day10.txt") as file:
+        data = file.read().splitlines()
+        print(solve_problems(data))

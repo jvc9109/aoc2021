@@ -98,7 +98,7 @@ class VentMap:
 
 
 if __name__ == '__main__':
-    with open("./data/day5.txt") as file:
+    with open("../data/day5.txt") as file:
         input_data = file.read().splitlines()
         vectors = create_vectors(input_data)
         vent_map = VentMap()

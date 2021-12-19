@@ -6,7 +6,7 @@ def count_fish(data, days):
 
 
 if __name__ == '__main__':
-    with open("./data/day6.txt") as file:
+    with open("../data/day6.txt") as file:
         input_data = file.read()
         data = [int(i) for i in input_data.split(',')]
 

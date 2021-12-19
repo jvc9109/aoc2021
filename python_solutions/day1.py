@@ -16,7 +16,7 @@ def get_how_much_increases_with_sliding(depths: list) -> int:
 
 
 if __name__ == '__main__':
-    with open("./data/day1.txt") as file:
+    with open("../data/day1.txt") as file:
         data = file.read().splitlines()
         print(get_how_much_increase(data))
         print(get_how_much_increases_with_sliding(data))

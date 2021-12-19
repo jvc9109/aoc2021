@@ -62,7 +62,7 @@ def obtain_co2_rating(lines: list, carry: int) -> int:
 
 
 if __name__ == '__main__':
-    with open("./data/day3.txt") as file:
+    with open("../data/day3.txt") as file:
         data = file.read().splitlines()
         gamma = obtain_gamma_value(data)
         epsilon = obtain_epsilon_from_gamma(gamma)

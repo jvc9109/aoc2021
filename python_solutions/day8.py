@@ -129,7 +129,7 @@ def part_one(lines):
 
 
 if __name__ == '__main__':
-    with open("./data/day8.txt") as file:
+    with open("../data/day8.txt") as file:
         data = file.read().splitlines()
         part_one(data)
         part_two(data)

@@ -82,14 +82,16 @@ if __name__ == '__main__':
         max_y = len(map)
         lighted = 0
         for step in range(1, 300):
-            print(f'Init Step {step}')
             for row in map:
                 for octopus in row:
                     octopus.add_energy()
             propagate(map, max_y, max_x)
             flashed = reset_counters(map)
+
             if flashed == 100:
-                print(step)
+                print(f'All are lighted at step {step}')
                 break
             lighted += reset_counters(map)
-    print(lighted)
+            if step == 100:
+                print(f' Step {step}')
+                print(lighted)

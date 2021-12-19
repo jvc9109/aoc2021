@@ -6,7 +6,7 @@ def part2(crabs):
 
 
 if __name__ == '__main__':
-    with open("./data/day7.txt") as file:
+    with open("../data/day7.txt") as file:
         input_data = file.read()
         data = [int(i) for i in input_data.split(',')]
         result = [0] * max(data)

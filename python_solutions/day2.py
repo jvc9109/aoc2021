@@ -33,7 +33,7 @@ def calculate_position_with_aim(instructions: list) -> tuple:
 
 
 if __name__ == '__main__':
-    with open("./data/day2.txt") as file:
+    with open("../data/day2.txt") as file:
         data = file.read().splitlines()
         horizontal, depth = calculate_position(data)
         print(horizontal * depth)
