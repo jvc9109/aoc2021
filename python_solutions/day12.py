@@ -49,6 +49,33 @@ class CaveSys:
 
         return paths
 
+    def search_paths_v2(self, start: str, end: str, partial_path: List[str], can_repeat_small: bool = True) \
+            -> List[List[str]]:
+        new_partial = [k for k in partial_path]
+        new_partial.append(start)
+
+        if start == end:
+            return [new_partial]
+
+        candidates = []
+
+        for cave in self.edges[start]:
+            if self.get_cave_size(cave) == CaveSize.BIG:
+                candidates.append((cave, can_repeat_small))
+            elif cave == 'start' and cave in new_partial:
+                continue
+            elif (cave == 'start' or cave == 'end') and cave not in new_partial:
+                candidates.append((cave, can_repeat_small))
+            elif self.get_cave_size(cave) == CaveSize.SMALL and can_repeat_small and new_partial.count(cave) < 2:
+                candidates.append((cave, can_repeat_small and new_partial.count(cave) < 1))
+            elif self.get_cave_size(cave) == CaveSize.SMALL and cave not in new_partial:
+                candidates.append((cave, can_repeat_small and new_partial.count(cave) < 1))
+        paths = []
+        for candidate, can_repeat in candidates:
+            paths.extend(self.search_paths_v2(candidate, end, new_partial, can_repeat))
+
+        return paths
+
 
 def read_input(raw_nodes: str) -> List[Edge]:
     res = []
@@ -61,9 +88,13 @@ def read_input(raw_nodes: str) -> List[Edge]:
 if __name__ == '__main__':
     input_test = 'start-A\nstart-b\nA-c\nA-b\nb-d\nA-end\nb-end'
     graph_test = CaveSys(read_input(input_test))
-    assert(len(graph_test.search_paths('start', 'end', []))==10)
+    assert (len(graph_test.search_paths('start', 'end', [])) == 10)
+    len(graph_test.search_paths_v2('start', 'end', [], True))
+    print(len(graph_test.search_paths_v2('start', 'end', [], True)))
 
     with open("../data/day12.txt") as file:
         data = file.read()
         graph = CaveSys(read_input(data))
         print(len(graph.search_paths('start', 'end', [])))
+
+        print(len(graph.search_paths_v2('start', 'end', [], True)))
