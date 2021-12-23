@@ -89,8 +89,7 @@ if __name__ == '__main__':
     input_test = 'start-A\nstart-b\nA-c\nA-b\nb-d\nA-end\nb-end'
     graph_test = CaveSys(read_input(input_test))
     assert (len(graph_test.search_paths('start', 'end', [])) == 10)
-    len(graph_test.search_paths_v2('start', 'end', [], True))
-    print(len(graph_test.search_paths_v2('start', 'end', [], True)))
+    assert (len(graph_test.search_paths_v2('start', 'end', [], True)) == 36)
 
     with open("../data/day12.txt") as file:
         data = file.read()
