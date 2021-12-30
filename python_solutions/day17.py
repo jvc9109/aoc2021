@@ -9,7 +9,7 @@ def obtain_vy_max(y) -> int:
     return (y ** 2 - y * 2) ** (1 / 2)
 
 
-def propagate(vx, vy, y_low, y_up, x_min, x_max):
+def propagate(vx, vy, y_low, y_up, x_low, x_high):
     stop = False
     y_curr = 0
     x_curr = 0
@@ -19,56 +19,39 @@ def propagate(vx, vy, y_low, y_up, x_min, x_max):
         x_curr += vx
         vx = vx - 1 if vx > 0 else vx + 1 if vx < 0 else 0
         vy -= 1
-        missed = x_curr > x_max or y_curr < y_low
-        matched = x_min <= x_curr <= x_max and y_up >= y_curr >= y_low
+        missed = x_curr > x_high or y_curr < y_low
+        matched = x_low <= x_curr <= x_high and y_up >= y_curr >= y_low
         stop = missed or matched
 
     return matched
 
 
-def propagate_y(vy_start, y_low, y_up):
-    y_curr = vy_start * (vy_start + 1) / 2
-    vy_curr = 0
-    stop = False
-    while not stop:
-        y_curr -= vy_curr
-        vy_curr += 1
-        stop = y_up > y_curr >= y_low or y_curr < y_low
-    return y_curr < y_low, y_up > y_curr >= y_low
+def solve(x_mi, x_ma, y_mi, y_ma):
+    vx_min = ceil(obtain_quadratic_result(1, 1, -2 * x_mi))
+    vx_max = floor(obtain_quadratic_result(1, 1, -2 * x_ma))
+
+    vy_max = round(obtain_vy_max(-y_ma))
+    y_max = vy_max * (vy_max + 1) / 2
+    print(f'maximum hight {y_max}')
+    combinations = set()
+
+    for i in range(x_mi, x_ma + 1):
+        for j in range(y_ma, y_mi + 1):
+            combinations.add((i, j))
+
+    for ix in range(vx_min, x_ma + 1):
+        for iy in range(vy_max, y_ma - 1, -1):
+            if propagate(ix, iy, y_ma, y_mi, x_mi, x_ma):
+                combinations.add((ix, iy))
+
+    print(f'total combinations {len(combinations)}')
+
+    return int(y_max), len(combinations)
 
 
 if __name__ == '__main__':
-    input_test = 'target area: x=20..30, y=-10..-5'
-    # x_min = 20
-    # x_max = 30
-    # y_min_targ = -5
-    # y_max_targ = -10
+    max_height_test, comb_test = solve(20, 30, -5, -10)
+    assert max_height_test == 45
+    assert comb_test == 112
 
-
-    x_min = 209
-    x_max = 238
-    y_min_targ = -59
-    y_max_targ = -86
-
-    vx_min = ceil(obtain_quadratic_result(1, 1, -2 * x_min))
-    vx_max = floor(obtain_quadratic_result(1, 1, -2 * x_max))
-
-    vy_max = round(obtain_vy_max(-y_max_targ))
-    print(vy_max)
-
-    y_max = vy_max * (vy_max + 1) / 2
-    print(y_max)
-    print(propagate_y(vy_max, y_max_targ, y_min_targ))
-
-    combinations = set()
-
-    for i in range(x_min, x_max + 1):
-        for j in range(y_max_targ, y_min_targ + 1):
-            combinations.add((i, j))
-
-    for ix in range(vx_min, x_max + 1):
-        for iy in range(vy_max, y_max_targ - 1, -1):
-            if propagate(ix, iy, y_max_targ, y_min_targ, x_min, x_max):
-                combinations.add((ix, iy))
-
-    print(len(combinations))
+    solve(209, 238, -59, -86)
