@@ -26,7 +26,6 @@ class Packet:
         return res
 
     def compute_value(self) -> int:
-        cum_val = 0
         if self.id == OperatorType.SUM:
             return self.sum_all_packets()
         elif self.id == OperatorType.LITERAL:
