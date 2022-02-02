@@ -1,4 +1,4 @@
-from math import ceil, floor
+from math import ceil
 
 
 def obtain_quadratic_result(a, b, c) -> int:
@@ -6,7 +6,7 @@ def obtain_quadratic_result(a, b, c) -> int:
 
 
 def obtain_vy_max(y) -> int:
-    return (y ** 2 - y * 2) ** (1 / 2)
+    return (y ** 2 + y * 2) ** (1 / 2)
 
 
 def propagate(vx, vy, y_low, y_up, x_low, x_high):
@@ -28,13 +28,11 @@ def propagate(vx, vy, y_low, y_up, x_low, x_high):
 
 def solve(x_mi, x_ma, y_mi, y_ma):
     vx_min = ceil(obtain_quadratic_result(1, 1, -2 * x_mi))
-    vx_max = floor(obtain_quadratic_result(1, 1, -2 * x_ma))
-
-    vy_max = round(obtain_vy_max(-y_ma))
+    vy_max = ceil(obtain_vy_max(y_ma))
     y_max = vy_max * (vy_max + 1) / 2
     print(f'maximum hight {y_max}')
-    combinations = set()
 
+    combinations = set()
     for i in range(x_mi, x_ma + 1):
         for j in range(y_ma, y_mi + 1):
             combinations.add((i, j))
